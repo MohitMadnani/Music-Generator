@@ -1,4 +1,6 @@
+modal
 transformers
 diffusers
 torch
-
+pydantic
+torchcodec
