@@ -248,11 +248,20 @@ class MusicGenServer:
 @app.local_entrypoint()
 def main():
     server = MusicGenServer()
-    endpoint_url = server.generate.get_web_url()
-    response = requests.post(endpoint_url)
-    response.raise_for_status()
-    result = GenerateMusicResponse(**response.json())
+    endpoint_url = server.generate.generate_from_description.get_web_url()
 
+    request_data = GenerateFromDescRequest(
+        full_described_song="Acoustic guitar with a slow tempo and a soft melody",
+        guidance_scale=15,
+        )
+
+    payload = request_data.model_dump()
+
+    response = requests.post(endpoint_url, json=payload)
+    response.raise_for_status()
+    result = GenerateMusicResponseToS3(**response.json())
+
+    print(f"Success: ${result.s3_key} ${result.cv_image_s3_key} ${result.categories}")  
     audio_bytes = base64.b64decode(result.audio_data)
     output_file = "generated.wav"
     with open(output_file, "wb") as f:
