@@ -5,7 +5,6 @@ from pydantic import BaseModel
 import base64
 import requests 
 from typing import List
-import boto3
 from prompts import LYRICS_GENERATOR_PROMPT, PROMPT_GENERATOR_PROMPT
 app = modal.App("music-generator")
 
@@ -13,6 +12,7 @@ image = (
     modal.Image.debian_slim()
     .apt_install("git", "ffmpeg")
     .pip_install_from_requirements("requirements.txt")
+    .pip_install("boto3")
     .run_commands(["git clone https://github.com/ace-step/ACE-Step.git /tmp/ACE-Step", "cd /tmp/ACE-Step && pip install ."])
     .env({"HF_HOME": "/.cache/huggingface"})
     .add_local_python_source("prompts")
@@ -24,7 +24,7 @@ hf_volume = modal.Volume.from_name("qwen-hf-cache", create_if_missing=True)
 music_gen_secrets = modal.Secret.from_name("music-gen-secrets")
 
 class AudioGenerationBase(BaseModel):
-    audio_duration: float = 15.0
+    audio_duration: float = 180.0
     seed: int = -1
     guidance_scale: float = 15.0
     infer_step: int = 60
@@ -43,7 +43,7 @@ class GenerateWithDescAndLyricsRequest(AudioGenerationBase):
 
 class GenerateMusicResponseToS3(BaseModel):
     s3_key: str
-    cv_image_s3_key: List[str]
+    cv_image_s3_key: str
     categories: List[str]
 
 
@@ -147,6 +147,8 @@ class MusicGenServer:
         seed: int,
         description_for_categories: str
     ) -> GenerateMusicResponseToS3:
+        import boto3
+        
         final_lyrics = "[instrumental]" if instrumental else lyrics
         print(f"Generating audio with prompt: {prompt} and lyrics: {final_lyrics}")
 
@@ -158,7 +160,7 @@ class MusicGenServer:
         # -- Frontend (next-js): GetObject, ListObject
 
         s3_client = boto3.client("s3")
-        bucket_name = os.environ("S3_BUCKET_NAME")
+        bucket_name = os.environ["S3_BUCKET_NAME"]
         output_dir = "/tmp/outputs"
         os.makedirs(output_dir, exist_ok=True)
         output_path = os.path.join(output_dir, f"{uuid.uuid4()}.wav")
@@ -170,7 +172,7 @@ class MusicGenServer:
             infer_step = infer_step,
             guidance_scale = guidance_scale,
             save_path = output_path,
-            manual_seed = str(seed)
+            manual_seeds = str(seed)
         )
 
         audio_s3_key = f"{uuid.uuid4()}.wav"
@@ -178,10 +180,10 @@ class MusicGenServer:
         os.remove(output_path)
 
         # Thumbnail Generation
-        thumbnail_prompt = f"{prompt} album cover art"
+        thumbnail_prompt = f"{prompt} album cover art"  
         image = self.image_pipe(prompt=prompt, num_inference_steps = 2, guidance_scale = 0.0).images[0]
 
-        image_output_path = os.path.join(output_dir, f"{uuid.uuid4()}.wav")
+        image_output_path = os.path.join(output_dir, f"{uuid.uuid4()}.png")
         image.save(image_output_path)
 
         image_s3_key = f"{uuid.uuid4()}.png"
@@ -196,7 +198,7 @@ class MusicGenServer:
             categories = categories
         )
         
-    @modal.fastapi_endpoint(method="POST")
+    @modal.fastapi_endpoint(method="POST", requires_proxy_auth=True)
     def generate(self) -> GenerateMusicResponse: 
         output_dir = "/tmp/outputs"
         os.makedirs(output_dir, exist_ok=True)
@@ -222,7 +224,7 @@ class MusicGenServer:
 
 
 
-    @modal.fastapi_endpoint(method="POST")
+    @modal.fastapi_endpoint(method="POST", requires_proxy_auth=True)
     def generate_from_description(self, request: GenerateFromDescRequest) -> GenerateMusicResponseToS3:
         # Generate a prompt 
         prompt = self.generate_prompt(request.full_described_song)
@@ -232,29 +234,32 @@ class MusicGenServer:
             lyrics = self.generate_lyrics(request.full_described_song)
         return self.generate_and_upload_to_s3(prompt=prompt, lyrics=lyrics, description_for_categories=request.full_described_song, **request.model_dump(exclude={"full_described_song"}))
                                         
-    @modal.fastapi_endpoint(method="POST")
+    @modal.fastapi_endpoint(method="POST", requires_proxy_auth=True)
     def generate_with_lyrics(self, request: GenerateWithCustomLyricsRequest) -> GenerateMusicResponseToS3:
-        return self.generate_and_upload_to_s3(prompt=request.prompt, lyrics=request.lyrics, description_for_categories=request.prompt, **request.model_dump())
+        return self.generate_and_upload_to_s3(prompt=request.prompt, lyrics=request.lyrics, description_for_categories=request.prompt, **request.model_dump(exclude={"prompt", "lyrics"}))
 
 
-    @modal.fastapi_endpoint(method="POST")
+    @modal.fastapi_endpoint(method="POST", requires_proxy_auth=True)
     def generate_with_desc_and_lyrics(self, request: GenerateWithDescAndLyricsRequest) -> GenerateMusicResponseToS3:
         lyrics = ""
-        if not request.lyrics:
-            lyrics = self.generate_lyrics(request.described_lyrics)
-        return self.generate_and_upload_to_s3(prompt=request.prompt, lyrics=lyrics, description_for_categories=request.prompt, **request.model_dump(exclude={"described_lyrics"}))
+        if not request.instrumental:
+            lyrics = self.generate_lyrics(request.desc_lyrics)
+        return self.generate_and_upload_to_s3(prompt=request.prompt, lyrics=lyrics, description_for_categories=request.prompt, **request.model_dump(exclude={"desc_lyrics", "prompt"}))
 
 
 @app.local_entrypoint()
 def main():
     server = MusicGenServer()
-    endpoint_url = server.generate.generate_from_description.get_web_url()
+    endpoint_url = server.generate_with_desc_and_lyrics.get_web_url()
 
-    request_data = GenerateFromDescRequest(
-        full_described_song="Acoustic guitar with a slow tempo and a soft melody",
+    request_data = GenerateWithDescAndLyricsRequest(
+        prompt="Trap, hip-hop, soul",
+        desc_lyrics="Old school hip-hop with a modern twist",
         guidance_scale=15,
-        )
+        audio_duration=120
+    )
 
+   
     payload = request_data.model_dump()
 
     response = requests.post(endpoint_url, json=payload)
@@ -262,7 +267,7 @@ def main():
     result = GenerateMusicResponseToS3(**response.json())
 
     print(f"Success: ${result.s3_key} ${result.cv_image_s3_key} ${result.categories}")  
-    audio_bytes = base64.b64decode(result.audio_data)
-    output_file = "generated.wav"
-    with open(output_file, "wb") as f:
-        f.write(audio_bytes)
+    # audio_bytes = base64.b64decode(result.audio_data)
+    # output_file = "generated.wav"
+    # with open(output_file, "wb") as f:
+    #     f.write(audio_bytes)
