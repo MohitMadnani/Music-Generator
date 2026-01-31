@@ -1191,6 +1191,9 @@ export namespace Prisma {
     updatedAt: Date | null
     emailVerified: boolean | null
     image: string | null
+    twoFactorEnabled: boolean | null
+    twoFactorSecret: string | null
+    twoFactorBackupCodes: string | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -1201,6 +1204,9 @@ export namespace Prisma {
     updatedAt: Date | null
     emailVerified: boolean | null
     image: string | null
+    twoFactorEnabled: boolean | null
+    twoFactorSecret: string | null
+    twoFactorBackupCodes: string | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -1211,6 +1217,9 @@ export namespace Prisma {
     updatedAt: number
     emailVerified: number
     image: number
+    twoFactorEnabled: number
+    twoFactorSecret: number
+    twoFactorBackupCodes: number
     _all: number
   }
 
@@ -1223,6 +1232,9 @@ export namespace Prisma {
     updatedAt?: true
     emailVerified?: true
     image?: true
+    twoFactorEnabled?: true
+    twoFactorSecret?: true
+    twoFactorBackupCodes?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -1233,6 +1245,9 @@ export namespace Prisma {
     updatedAt?: true
     emailVerified?: true
     image?: true
+    twoFactorEnabled?: true
+    twoFactorSecret?: true
+    twoFactorBackupCodes?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -1243,6 +1258,9 @@ export namespace Prisma {
     updatedAt?: true
     emailVerified?: true
     image?: true
+    twoFactorEnabled?: true
+    twoFactorSecret?: true
+    twoFactorBackupCodes?: true
     _all?: true
   }
 
@@ -1326,6 +1344,9 @@ export namespace Prisma {
     updatedAt: Date
     emailVerified: boolean
     image: string | null
+    twoFactorEnabled: boolean
+    twoFactorSecret: string | null
+    twoFactorBackupCodes: string | null
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -1353,6 +1374,9 @@ export namespace Prisma {
     updatedAt?: boolean
     emailVerified?: boolean
     image?: boolean
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: boolean
+    twoFactorBackupCodes?: boolean
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     accounts?: boolean | User$accountsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1366,6 +1390,9 @@ export namespace Prisma {
     updatedAt?: boolean
     emailVerified?: boolean
     image?: boolean
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: boolean
+    twoFactorBackupCodes?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1376,6 +1403,9 @@ export namespace Prisma {
     updatedAt?: boolean
     emailVerified?: boolean
     image?: boolean
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: boolean
+    twoFactorBackupCodes?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -1386,9 +1416,12 @@ export namespace Prisma {
     updatedAt?: boolean
     emailVerified?: boolean
     image?: boolean
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: boolean
+    twoFactorBackupCodes?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "createdAt" | "updatedAt" | "emailVerified" | "image", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "createdAt" | "updatedAt" | "emailVerified" | "image" | "twoFactorEnabled" | "twoFactorSecret" | "twoFactorBackupCodes", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     accounts?: boolean | User$accountsArgs<ExtArgs>
@@ -1411,6 +1444,9 @@ export namespace Prisma {
       updatedAt: Date
       emailVerified: boolean
       image: string | null
+      twoFactorEnabled: boolean
+      twoFactorSecret: string | null
+      twoFactorBackupCodes: string | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -1843,6 +1879,9 @@ export namespace Prisma {
     readonly updatedAt: FieldRef<"User", 'DateTime'>
     readonly emailVerified: FieldRef<"User", 'Boolean'>
     readonly image: FieldRef<"User", 'String'>
+    readonly twoFactorEnabled: FieldRef<"User", 'Boolean'>
+    readonly twoFactorSecret: FieldRef<"User", 'String'>
+    readonly twoFactorBackupCodes: FieldRef<"User", 'String'>
   }
     
 
@@ -5585,7 +5624,10 @@ export namespace Prisma {
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     emailVerified: 'emailVerified',
-    image: 'image'
+    image: 'image',
+    twoFactorEnabled: 'twoFactorEnabled',
+    twoFactorSecret: 'twoFactorSecret',
+    twoFactorBackupCodes: 'twoFactorBackupCodes'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -5728,6 +5770,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"User"> | Date | string
     emailVerified?: BoolFilter<"User"> | boolean
     image?: StringNullableFilter<"User"> | string | null
+    twoFactorEnabled?: BoolFilter<"User"> | boolean
+    twoFactorSecret?: StringNullableFilter<"User"> | string | null
+    twoFactorBackupCodes?: StringNullableFilter<"User"> | string | null
     sessions?: SessionListRelationFilter
     accounts?: AccountListRelationFilter
   }
@@ -5740,6 +5785,9 @@ export namespace Prisma {
     updatedAt?: SortOrder
     emailVerified?: SortOrder
     image?: SortOrderInput | SortOrder
+    twoFactorEnabled?: SortOrder
+    twoFactorSecret?: SortOrderInput | SortOrder
+    twoFactorBackupCodes?: SortOrderInput | SortOrder
     sessions?: SessionOrderByRelationAggregateInput
     accounts?: AccountOrderByRelationAggregateInput
   }
@@ -5755,6 +5803,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"User"> | Date | string
     emailVerified?: BoolFilter<"User"> | boolean
     image?: StringNullableFilter<"User"> | string | null
+    twoFactorEnabled?: BoolFilter<"User"> | boolean
+    twoFactorSecret?: StringNullableFilter<"User"> | string | null
+    twoFactorBackupCodes?: StringNullableFilter<"User"> | string | null
     sessions?: SessionListRelationFilter
     accounts?: AccountListRelationFilter
   }, "id" | "email">
@@ -5767,6 +5818,9 @@ export namespace Prisma {
     updatedAt?: SortOrder
     emailVerified?: SortOrder
     image?: SortOrderInput | SortOrder
+    twoFactorEnabled?: SortOrder
+    twoFactorSecret?: SortOrderInput | SortOrder
+    twoFactorBackupCodes?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -5783,6 +5837,9 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     emailVerified?: BoolWithAggregatesFilter<"User"> | boolean
     image?: StringNullableWithAggregatesFilter<"User"> | string | null
+    twoFactorEnabled?: BoolWithAggregatesFilter<"User"> | boolean
+    twoFactorSecret?: StringNullableWithAggregatesFilter<"User"> | string | null
+    twoFactorBackupCodes?: StringNullableWithAggregatesFilter<"User"> | string | null
   }
 
   export type SessionWhereInput = {
@@ -6015,6 +6072,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     emailVerified?: boolean
     image?: string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    twoFactorBackupCodes?: string | null
     sessions?: SessionCreateNestedManyWithoutUserInput
     accounts?: AccountCreateNestedManyWithoutUserInput
   }
@@ -6027,6 +6087,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     emailVerified?: boolean
     image?: string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    twoFactorBackupCodes?: string | null
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
   }
@@ -6039,6 +6102,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorBackupCodes?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUpdateManyWithoutUserNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
   }
@@ -6051,6 +6117,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorBackupCodes?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -6063,6 +6132,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     emailVerified?: boolean
     image?: string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    twoFactorBackupCodes?: string | null
   }
 
   export type UserUpdateManyMutationInput = {
@@ -6073,6 +6145,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorBackupCodes?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -6083,6 +6158,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorBackupCodes?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SessionCreateInput = {
@@ -6414,6 +6492,9 @@ export namespace Prisma {
     updatedAt?: SortOrder
     emailVerified?: SortOrder
     image?: SortOrder
+    twoFactorEnabled?: SortOrder
+    twoFactorSecret?: SortOrder
+    twoFactorBackupCodes?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -6424,6 +6505,9 @@ export namespace Prisma {
     updatedAt?: SortOrder
     emailVerified?: SortOrder
     image?: SortOrder
+    twoFactorEnabled?: SortOrder
+    twoFactorSecret?: SortOrder
+    twoFactorBackupCodes?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -6434,6 +6518,9 @@ export namespace Prisma {
     updatedAt?: SortOrder
     emailVerified?: SortOrder
     image?: SortOrder
+    twoFactorEnabled?: SortOrder
+    twoFactorSecret?: SortOrder
+    twoFactorBackupCodes?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -7054,6 +7141,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     emailVerified?: boolean
     image?: string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    twoFactorBackupCodes?: string | null
     accounts?: AccountCreateNestedManyWithoutUserInput
   }
 
@@ -7065,6 +7155,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     emailVerified?: boolean
     image?: string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    twoFactorBackupCodes?: string | null
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -7092,6 +7185,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorBackupCodes?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUpdateManyWithoutUserNestedInput
   }
 
@@ -7103,6 +7199,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorBackupCodes?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -7114,6 +7213,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     emailVerified?: boolean
     image?: string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    twoFactorBackupCodes?: string | null
     sessions?: SessionCreateNestedManyWithoutUserInput
   }
 
@@ -7125,6 +7227,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     emailVerified?: boolean
     image?: string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    twoFactorBackupCodes?: string | null
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -7152,6 +7257,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorBackupCodes?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUpdateManyWithoutUserNestedInput
   }
 
@@ -7163,6 +7271,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorBackupCodes?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
   }
 

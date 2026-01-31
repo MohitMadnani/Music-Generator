@@ -25,8 +25,6 @@ export default function SignInPage() {
 
       if (result.error) {
         setError(result.error.message ?? "Failed to sign in");
-      } else if (result.data && typeof result.data === "object" && "twoFactorRedirect" in result.data && result.data.twoFactorRedirect) {
-        router.push("/auth/two-factor");
       } else {
         router.push("/");
         router.refresh();
@@ -82,18 +80,12 @@ export default function SignInPage() {
           />
         </div>
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-end">
           <Link
             href="/auth/forgot-password"
             className="text-sm text-purple-400 hover:text-purple-300 transition"
           >
             Forgot password?
-          </Link>
-          <Link
-            href="/auth/magic-link"
-            className="text-sm text-purple-400 hover:text-purple-300 transition"
-          >
-            Use magic link
           </Link>
         </div>
 

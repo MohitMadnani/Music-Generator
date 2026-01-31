@@ -1,4 +1,10 @@
-import { auth } from "@/lib/auth"; // path to your auth file
-import { toNextJsHandler } from "better-auth/next-js";
+import { serve } from "inngest/next";
+import { inngest } from "../../../../inngest/client";
+import { generateSong } from "../../../../inngest/functions";
 
-export const { POST, GET } = toNextJsHandler(auth);
+export const { GET, POST, PUT } = serve({
+  client: inngest,
+  functions: [
+    generateSong,
+  ],
+});
