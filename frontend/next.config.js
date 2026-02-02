@@ -5,6 +5,21 @@
 import "./src/env.js";
 
 /** @type {import("next").NextConfig} */
-const config = {};
+const config = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "bucket-music-generation.s3.us-east-1.amazonaws.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "*.s3.*.amazonaws.com",
+        pathname: "/**",
+      },
+    ],
+  },
+};
 
 export default config;

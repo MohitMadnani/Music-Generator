@@ -1,6 +1,7 @@
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/sidebar/app-sidebar";
 import { BreadcrumbsPageClient } from "@/components/sidebar/breadcrumbs-page-client";
+import SoundBar from "@/components/sound-bar";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
@@ -23,11 +24,10 @@ export default async function MainLayout({
   return (
     <SidebarProvider>
       <AppSidebar user={session.user} credits={userCredits} />
-      <SidebarInset>
+      <SidebarInset className="flex h-screen flex-col">
         <BreadcrumbsPageClient />
-        <main className="flex-1 p-4">
-          {children}
-        </main>
+        <main className="flex-1 overflow-y-auto">{children}</main>
+        <SoundBar />
       </SidebarInset>
     </SidebarProvider>
   );
