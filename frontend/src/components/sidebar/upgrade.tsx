@@ -1,14 +1,22 @@
 "use client";
 
-import Link from "next/link";
+import { authClient } from "@/lib/auth-client";
 
-export function Upgrade() {
+export default function Upgrade() {
+  const handleUpgrade = async () => {
+    await authClient.checkout({
+      products: ["5cb25676-f9b0-4a41-bde4-62676dc914a0",
+        "64100751-e90b-4b9b-a1ad-60be78a5fb38",
+        "f63eba76-7bd3-4f09-9581-2c190bbddde3"],
+    });
+  };
+
   return (
-    <Link
-      href="/upgrade"
+    <button
+      onClick={handleUpgrade}
       className="text-sm font-medium text-orange-500 hover:text-orange-600 transition-colors"
     >
       Upgrade
-    </Link>
+    </button>
   );
 }

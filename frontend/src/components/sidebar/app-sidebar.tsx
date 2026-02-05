@@ -23,7 +23,7 @@ import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { SidebarMenuItems } from "./sidebar-menu-items";
 import { Credits } from "./credits";
-import { Upgrade } from "./upgrade";
+import Upgrade from "./upgrade";
 
 interface AppSidebarProps {
   user?: {

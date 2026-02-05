@@ -23,6 +23,8 @@ export const env = createEnv({
     GENERATE_WITH_LYRICS: z.string(),
     GENERATE_WITH_DESC_AND_LYRICS: z.string(),
     RESEND_API_KEY: z.string(),
+    POLAR_ACCESS_TOKEN: z.string(),
+    POLAR_WEBHOOK_SECRET: z.string(),
   },
 
   /**
@@ -53,6 +55,8 @@ export const env = createEnv({
     GENERATE_WITH_LYRICS: process.env.GENERATE_WITH_LYRICS,
     GENERATE_WITH_DESC_AND_LYRICS: process.env.GENERATE_WITH_DESC_AND_LYRICS,
     RESEND_API_KEY: process.env.RESEND_API_KEY,
+    POLAR_ACCESS_TOKEN: process.env.POLAR_ACCESS_TOKEN,
+    POLAR_WEBHOOK_SECRET: process.env.POLAR_WEBHOOK_SECRET,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
