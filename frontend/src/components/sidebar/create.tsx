@@ -1,7 +1,12 @@
 "use client";
 
-import { queueSong } from "@/actions/generation";
+import { useRouter } from "next/navigation";
 
 export default function CreateSong() {
-    return (<button onClick= {async () => {await queueSong()}}> Generate Song </button>);
+    const router = useRouter();
+    return (
+        <button onClick={() => router.push("/create")}>
+            Generate Song
+        </button>
+    );
 }
