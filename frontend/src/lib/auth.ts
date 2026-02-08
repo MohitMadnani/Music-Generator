@@ -14,8 +14,20 @@ const polarClient = new Polar({
     accessToken: env.POLAR_ACCESS_TOKEN,
 });
 
+// Build trusted origins list dynamically
+const trustedOrigins = [
+    "http://localhost:3000",
+    env.BETTER_AUTH_URL,
+];
+
+// Add Vercel deployment URL if available (for preview deployments)
+if (process.env.VERCEL_URL) {
+    trustedOrigins.push(`https://${process.env.VERCEL_URL}`);
+}
+
 export const auth = betterAuth({
     baseURL: env.BETTER_AUTH_URL,
+    trustedOrigins,
     database: prismaAdapter(db, {
         provider: "postgresql",
     }),
