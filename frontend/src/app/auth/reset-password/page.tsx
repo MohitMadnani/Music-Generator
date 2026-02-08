@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 
-export default function ResetPasswordPage() {
+function ResetPasswordContent() {
   const searchParams = useSearchParams();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -142,5 +142,21 @@ export default function ResetPasswordPage() {
         </Link>
       </p>
     </div>
+  );
+}
+
+export default function ResetPasswordPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="bg-slate-800 rounded-xl shadow-2xl p-8 border border-slate-700">
+          <div className="text-center">
+            <p className="text-slate-400">Loading...</p>
+          </div>
+        </div>
+      }
+    >
+      <ResetPasswordContent />
+    </Suspense>
   );
 }

@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
-export default function CallbackPage() {
+function CallbackContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [error, setError] = useState("");
@@ -55,5 +55,22 @@ export default function CallbackPage() {
         <p className="text-slate-400 mt-2">Completing authentication</p>
       </div>
     </div>
+  );
+}
+
+export default function CallbackPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="bg-slate-800 rounded-xl shadow-2xl p-8 border border-slate-700">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500 mx-auto mb-4"></div>
+            <p className="text-slate-400">Loading...</p>
+          </div>
+        </div>
+      }
+    >
+      <CallbackContent />
+    </Suspense>
   );
 }

@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 
-export default function AcceptInvitationPage() {
+function AcceptInvitationContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [error, setError] = useState("");
@@ -119,5 +119,21 @@ export default function AcceptInvitationPage() {
         </Link>
       </p>
     </div>
+  );
+}
+
+export default function AcceptInvitationPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="bg-card border-border rounded-xl border p-8 shadow-lg">
+          <div className="text-center">
+            <p className="text-muted-foreground">Loading...</p>
+          </div>
+        </div>
+      }
+    >
+      <AcceptInvitationContent />
+    </Suspense>
   );
 }
