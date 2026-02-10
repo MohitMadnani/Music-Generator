@@ -36,23 +36,35 @@ export const auth = betterAuth({
     emailAndPassword: {
         enabled: true,
         sendResetPassword: async ({ user, url }) => {
-            await resend.emails.send({
-                from: "Music Generator <noreply@yourdomain.com>",
-                to: user.email,
-                subject: "Reset your password",
-                html: `
-                    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-                        <h2 style="color: #7c3aed;">Reset Your Password</h2>
-                        <p>Hi${user.name ? ` ${user.name}` : ""},</p>
-                        <p>You requested to reset your password. Click the button below to set a new password:</p>
-                        <a href="${url}" style="display: inline-block; background-color: #7c3aed; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; margin: 16px 0;">
-                            Reset Password
-                        </a>
-                        <p style="color: #666; font-size: 14px;">This link will expire in 1 hour.</p>
-                        <p style="color: #666; font-size: 14px;">If you didn't request this, you can safely ignore this email.</p>
-                    </div>
-                `,
-            });
+            try {
+                const result = await resend.emails.send({
+                    from: `Music Generator <${env.RESEND_FROM_EMAIL}>`,
+                    to: user.email,
+                    subject: "Reset your password",
+                    html: `
+                        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                            <h2 style="color: #7c3aed;">Reset Your Password</h2>
+                            <p>Hi${user.name ? ` ${user.name}` : ""},</p>
+                            <p>You requested to reset your password. Click the button below to set a new password:</p>
+                            <a href="${url}" style="display: inline-block; background-color: #7c3aed; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; margin: 16px 0;">
+                                Reset Password
+                            </a>
+                            <p style="color: #666; font-size: 14px;">This link will expire in 1 hour.</p>
+                            <p style="color: #666; font-size: 14px;">If you didn't request this, you can safely ignore this email.</p>
+                        </div>
+                    `,
+                });
+                
+                if (result.error) {
+                    console.error("Resend error:", result.error);
+                    throw new Error(result.error.message);
+                }
+                
+                console.log("Password reset email sent to:", user.email);
+            } catch (error) {
+                console.error("Failed to send password reset email:", error);
+                throw error;
+            }
         },
     },
     socialProviders: {

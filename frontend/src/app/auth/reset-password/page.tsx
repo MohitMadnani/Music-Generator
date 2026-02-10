@@ -4,6 +4,9 @@ import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 function ResetPasswordContent() {
   const searchParams = useSearchParams();
@@ -64,80 +67,67 @@ function ResetPasswordContent() {
 
   if (success) {
     return (
-      <div className="bg-slate-800 rounded-xl shadow-2xl p-8 border border-slate-700">
+      <div className="bg-card border-border rounded-xl border p-8 shadow-lg">
         <div className="text-center">
-          <div className="bg-green-500/10 border border-green-500 text-green-400 px-4 py-4 rounded-lg mb-6">
+          <div className="mb-6 rounded-lg border border-green-500/50 bg-green-500/10 px-4 py-4 text-green-400">
             <p className="font-medium">Password Reset Successful!</p>
-            <p className="text-sm mt-1">Your password has been changed</p>
+            <p className="mt-1 text-sm">Your password has been changed</p>
           </div>
-          <Link
-            href="/auth/sign-in"
-            className="inline-block py-3 px-6 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg transition"
-          >
-            Sign In
-          </Link>
+          <Button asChild>
+            <Link href="/auth/sign-in">Sign In</Link>
+          </Button>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-slate-800 rounded-xl shadow-2xl p-8 border border-slate-700">
-      <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-white">Reset Password</h1>
-        <p className="text-slate-400 mt-2">Enter your new password</p>
+    <div className="bg-card border-border rounded-xl border p-8 shadow-lg">
+      <div className="mb-8 text-center">
+        <h1 className="text-foreground text-3xl font-bold">Reset Password</h1>
+        <p className="text-muted-foreground mt-2">Enter your new password</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {error && (
-          <div className="bg-red-500/10 border border-red-500 text-red-500 px-4 py-3 rounded-lg text-sm">
+          <div className="rounded-lg border border-destructive/50 bg-destructive/10 px-4 py-3 text-sm text-destructive">
             {error}
           </div>
         )}
 
-        <div>
-          <label htmlFor="password" className="block text-sm font-medium text-slate-300 mb-2">
-            New Password
-          </label>
-          <input
+        <div className="space-y-2">
+          <Label htmlFor="password">New Password</Label>
+          <Input
             id="password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
             disabled={!token}
-            className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition disabled:opacity-50"
             placeholder="••••••••"
           />
         </div>
 
-        <div>
-          <label htmlFor="confirmPassword" className="block text-sm font-medium text-slate-300 mb-2">
-            Confirm New Password
-          </label>
-          <input
+        <div className="space-y-2">
+          <Label htmlFor="confirmPassword">Confirm New Password</Label>
+          <Input
             id="confirmPassword"
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
             disabled={!token}
-            className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition disabled:opacity-50"
             placeholder="••••••••"
           />
         </div>
 
-        <button
-          type="submit"
-          disabled={loading || !token}
-          className="w-full py-3 px-4 bg-purple-600 hover:bg-purple-700 disabled:bg-purple-600/50 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-slate-800"
-        >
+        <Button type="submit" disabled={loading || !token} className="w-full">
           {loading ? "Resetting..." : "Reset Password"}
-        </button>
+        </Button>
       </form>
 
-      <p className="mt-8 text-center text-sm text-slate-400">
-        <Link href="/auth/sign-in" className="text-purple-400 hover:text-purple-300 font-medium transition">
+      <p className="text-muted-foreground mt-8 text-center text-sm">
+        <Link href="/auth/sign-in" className="text-foreground hover:text-foreground/80 font-medium transition">
           ← Back to sign in
         </Link>
       </p>
@@ -149,9 +139,9 @@ export default function ResetPasswordPage() {
   return (
     <Suspense
       fallback={
-        <div className="bg-slate-800 rounded-xl shadow-2xl p-8 border border-slate-700">
+        <div className="bg-card border-border rounded-xl border p-8 shadow-lg">
           <div className="text-center">
-            <p className="text-slate-400">Loading...</p>
+            <p className="text-muted-foreground">Loading...</p>
           </div>
         </div>
       }

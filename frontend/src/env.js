@@ -23,6 +23,7 @@ export const env = createEnv({
     GENERATE_WITH_LYRICS: z.string(),
     GENERATE_WITH_DESC_AND_LYRICS: z.string(),
     RESEND_API_KEY: z.string(),
+    RESEND_FROM_EMAIL: z.string().default("onboarding@resend.dev"),
     POLAR_ACCESS_TOKEN: z.string(),
     POLAR_WEBHOOK_SECRET: z.string(),
     // Social OAuth providers (optional - only required if you want social login)
@@ -60,6 +61,7 @@ export const env = createEnv({
     GENERATE_WITH_LYRICS: process.env.GENERATE_WITH_LYRICS,
     GENERATE_WITH_DESC_AND_LYRICS: process.env.GENERATE_WITH_DESC_AND_LYRICS,
     RESEND_API_KEY: process.env.RESEND_API_KEY,
+    RESEND_FROM_EMAIL: process.env.RESEND_FROM_EMAIL,
     POLAR_ACCESS_TOKEN: process.env.POLAR_ACCESS_TOKEN,
     POLAR_WEBHOOK_SECRET: process.env.POLAR_WEBHOOK_SECRET,
     GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
