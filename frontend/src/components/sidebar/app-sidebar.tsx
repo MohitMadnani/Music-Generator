@@ -22,8 +22,8 @@ import {
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { SidebarMenuItems } from "./sidebar-menu-items";
-import { Credits } from "./credits";
 import Upgrade from "./upgrade";
+import { type ReactNode } from "react";
 
 interface AppSidebarProps {
   user?: {
@@ -31,10 +31,10 @@ interface AppSidebarProps {
     email?: string | null;
     image?: string | null;
   };
-  credits?: number;
+  creditsSlot: ReactNode;
 }
 
-export function AppSidebar({ user, credits = 0 }: AppSidebarProps) {
+export function AppSidebar({ user, creditsSlot }: AppSidebarProps) {
   const router = useRouter();
 
   const handleSignOut = async () => {
@@ -78,7 +78,7 @@ export function AppSidebar({ user, credits = 0 }: AppSidebarProps) {
       <SidebarFooter className="border-t p-2">
         {/* Credits Row */}
         <div className="flex items-center justify-between px-2 py-2">
-          <Credits credits={credits} />
+          {creditsSlot}
           <Upgrade />
         </div>
 

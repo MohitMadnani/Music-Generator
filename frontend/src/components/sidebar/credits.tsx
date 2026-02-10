@@ -1,10 +1,7 @@
-"use server";
-
-import {headers} from "next/headers";
+import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 import { db } from "@/server/db";
 import { redirect } from "next/navigation";
-
 
 export async function Credits() {
   const session = await auth.api.getSession({
@@ -15,21 +12,17 @@ export async function Credits() {
     redirect("/auth/sign-in");
   }
 
-  const user = await db.user.findUniqueOrThrow({
+  const user = await db.user.findUnique({
     where: {
       id: session.user.id,
     },
     select: { credits: true },
-
   });
 
   return (
-    <>
-      <p className="font-semibold">{user.credits}</p>
-      <p className="text-muted-foreground">Credits</p>
-    </>
+    <div className="flex flex-col">
+      <p className="font-semibold">{user?.credits ?? 0}</p>
+      <p className="text-muted-foreground text-sm">Credits</p>
+    </div>
   );
 }
-
-
-

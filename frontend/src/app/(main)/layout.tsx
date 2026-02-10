@@ -11,6 +11,7 @@ import SoundBar from "@/components/sound-bar";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { Credits } from "@/components/sidebar/credits";
 
 export default async function MainLayout({
   children,
@@ -25,11 +26,9 @@ export default async function MainLayout({
     redirect("/auth/sign-in");
   }
 
-  const userCredits = (session.user as { credits?: number } | undefined)?.credits ?? 0;
-
   return (
     <SidebarProvider>
-      <AppSidebar user={session.user} credits={userCredits} />
+      <AppSidebar user={session.user} creditsSlot={<Credits />} />
       <SidebarInset className="flex h-screen flex-col">
         <header className="bg-background sticky top-0 z-10 border-b px-4 py-2">
           <div className="flex shrink-0 grow items-center gap-2">
