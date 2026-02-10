@@ -1,14 +1,35 @@
-"use client";
+"use server";
 
-interface CreditsProps {
-  credits: number;
-}
+import {headers} from "next/headers";
+import { auth } from "@/lib/auth";
+import { db } from "@/server/db";
+import { redirect } from "next/navigation";
 
-export function Credits({ credits }: CreditsProps) {
+
+export async function Credits() {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session) {
+    redirect("/auth/sign-in");
+  }
+
+  const user = await db.user.findUniqueOrThrow({
+    where: {
+      id: session.user.id,
+    },
+    select: { credits: true },
+
+  });
+
   return (
-    <div className="flex items-center gap-2 px-2 py-1">
-      <span className="text-sm font-medium text-foreground">{credits}</span>
-      <span className="text-sm text-muted-foreground">Credits</span>
-    </div>
+    <>
+      <p className="font-semibold">{user.credits}</p>
+      <p className="text-muted-foreground">Credits</p>
+    </>
   );
 }
+
+
+

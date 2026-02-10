@@ -18,6 +18,8 @@ const polarClient = new Polar({
 const trustedOrigins = [
     "http://localhost:3000",
     env.BETTER_AUTH_URL,
+    // Custom domain
+    "https://music-gen.mohitmadnani.co.uk",
 ];
 
 // Add Vercel deployment URL if available (for preview deployments)
