@@ -67,13 +67,13 @@ function ResetPasswordContent() {
 
   if (success) {
     return (
-      <div className="bg-card border-border rounded-xl border p-8 shadow-lg">
+      <div className="w-full max-w-md bg-white/5 backdrop-blur-xl border-white/10 rounded-lg border p-8 shadow-2xl">
         <div className="text-center">
           <div className="mb-6 rounded-lg border border-green-500/50 bg-green-500/10 px-4 py-4 text-green-400">
             <p className="font-medium">Password Reset Successful!</p>
             <p className="mt-1 text-sm">Your password has been changed</p>
           </div>
-          <Button asChild>
+          <Button asChild className="bg-blue-600 hover:bg-blue-700 text-white">
             <Link href="/auth/sign-in">Sign In</Link>
           </Button>
         </div>
@@ -82,21 +82,21 @@ function ResetPasswordContent() {
   }
 
   return (
-    <div className="bg-card border-border rounded-xl border p-8 shadow-lg">
+    <div className="bg-black/50 backdrop-blur-sm border-white/10 rounded-xl border p-8 shadow-lg">
       <div className="mb-8 text-center">
-        <h1 className="text-foreground text-3xl font-bold">Reset Password</h1>
-        <p className="text-muted-foreground mt-2">Enter your new password</p>
+        <h1 className="text-white text-3xl font-bold">Reset Password</h1>
+        <p className="text-gray-400 mt-2">Enter your new password</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {error && (
-          <div className="rounded-lg border border-destructive/50 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+          <div className="rounded-lg border border-red-500 bg-red-500/10 px-4 py-3 text-sm text-red-500">
             {error}
           </div>
         )}
 
         <div className="space-y-2">
-          <Label htmlFor="password">New Password</Label>
+          <Label htmlFor="password" className="text-white">New Password</Label>
           <Input
             id="password"
             type="password"
@@ -105,11 +105,12 @@ function ResetPasswordContent() {
             required
             disabled={!token}
             placeholder="••••••••"
+            className="bg-white/5 border-white/10 text-white placeholder:text-gray-500"
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="confirmPassword">Confirm New Password</Label>
+          <Label htmlFor="confirmPassword" className="text-white">Confirm New Password</Label>
           <Input
             id="confirmPassword"
             type="password"
@@ -118,16 +119,21 @@ function ResetPasswordContent() {
             required
             disabled={!token}
             placeholder="••••••••"
+            className="bg-white/5 border-white/10 text-white placeholder:text-gray-500"
           />
         </div>
 
-        <Button type="submit" disabled={loading || !token} className="w-full">
+        <Button
+          type="submit"
+          disabled={loading || !token}
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+        >
           {loading ? "Resetting..." : "Reset Password"}
         </Button>
       </form>
 
-      <p className="text-muted-foreground mt-8 text-center text-sm">
-        <Link href="/auth/sign-in" className="text-foreground hover:text-foreground/80 font-medium transition">
+      <p className="text-gray-400 mt-8 text-center text-sm">
+        <Link href="/auth/sign-in" className="text-blue-500 hover:text-blue-400 font-medium transition">
           ← Back to sign in
         </Link>
       </p>
@@ -137,16 +143,18 @@ function ResetPasswordContent() {
 
 export default function ResetPasswordPage() {
   return (
-    <Suspense
-      fallback={
-        <div className="bg-card border-border rounded-xl border p-8 shadow-lg">
-          <div className="text-center">
-            <p className="text-muted-foreground">Loading...</p>
+    <div className="min-h-screen w-full bg-black text-white flex items-center justify-center p-4">
+      <Suspense
+        fallback={
+          <div className="w-full max-w-md bg-white/5 backdrop-blur-xl border-white/10 rounded-lg border p-8 shadow-2xl">
+            <div className="text-center">
+              <p className="text-gray-400">Loading...</p>
+            </div>
           </div>
-        </div>
-      }
-    >
-      <ResetPasswordContent />
-    </Suspense>
+        }
+      >
+        <ResetPasswordContent />
+      </Suspense>
+    </div>
   );
 }

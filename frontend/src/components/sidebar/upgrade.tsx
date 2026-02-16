@@ -14,7 +14,7 @@ export default function Upgrade() {
   return (
     <button
       onClick={handleUpgrade}
-      className="text-sm font-medium text-orange-500 hover:text-orange-600 transition-colors"
+      className="text-sm font-medium text-blue-500 hover:text-blue-400 transition-colors"
     >
       Upgrade
     </button>

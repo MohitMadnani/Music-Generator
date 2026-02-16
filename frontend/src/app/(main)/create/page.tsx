@@ -17,13 +17,12 @@ export default async function Page() {
   }
 
   return (
-    <div className="flex h-full flex-col lg:flex-row">
-
-    <SongPanel />
+    <div className="flex h-full flex-col lg:flex-row bg-black">
+      <SongPanel />
       <Suspense
         fallback={
-          <div className="flex h-full w-full items-center justify-center">
-            <Loader2 className="h-8 w-8 animate-spin" />
+          <div className="flex h-full w-full items-center justify-center bg-black">
+            <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
           </div>
         }
       >

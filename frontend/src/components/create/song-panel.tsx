@@ -117,40 +117,42 @@ export function SongPanel() {
   };
 
   return (
-    <div className="bg-muted/30 flex w-full flex-col border-r lg:w-80">
+    <div className="bg-black flex w-full flex-col border-r border-white/10 lg:w-80">
       <div className="flex-1 overflow-y-auto p-4">
         <Tabs
           value={mode}
           onValueChange={(value) => setMode(value as "simple" | "custom")}
+          className="text-white"
         >
-          <TabsList className="w-full">
-            <TabsTrigger value="simple">Simple</TabsTrigger>
-            <TabsTrigger value="custom">Custom</TabsTrigger>
+          <TabsList className="w-full bg-white/5 border border-white/10">
+            <TabsTrigger value="simple" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white text-gray-300">Simple</TabsTrigger>
+            <TabsTrigger value="custom" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white text-gray-300">Custom</TabsTrigger>
           </TabsList>
 
           <TabsContent value="simple" className="mt-6 space-y-6">
             <div className="flex flex-col gap-3">
-              <label className="text-sm font-medium">Describe your song</label>
+              <label className="text-sm font-medium text-white">Describe your song</label>
               <Textarea
                 value={description}
                 onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)}
-                placeholder="A dreamy lofi hip hop song, perfect for studying of relaxing"
-                className="min-h-[120px] resize-none"
+                placeholder="A dreamy lofi hip hop song, perfect for studying or relaxing"
+                className="min-h-[120px] resize-none bg-white/5 border-white/10 text-white placeholder:text-gray-500"
               />
             </div>
 
-            {/* Lyrics button an instrumentals toggle */}
+            {/* Lyrics button and instrumentals toggle */}
             <div className="flex items-center justify-between">
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => setMode("custom")}
+                className="bg-white/5 border-white/10 text-white hover:bg-white/10"
               >
                 <Plus className="mr-2" />
                 Lyrics
               </Button>
               <div className="flex items-center gap-2">
-                <label className="text-sm font-medium">Instrumental</label>
+                <label className="text-sm font-medium text-white">Instrumental</label>
                 <Switch
                   checked={instrumental}
                   onCheckedChange={setInstrumental}
@@ -159,14 +161,14 @@ export function SongPanel() {
             </div>
 
             <div className="flex flex-col gap-3">
-              <label className="text-sm font-medium">Inspiration</label>
+              <label className="text-sm font-medium text-white">Inspiration</label>
               <div className="w-full overflow-x-auto whitespace-nowrap">
                 <div className="flex gap-2 pb-2">
                   {inspirationTags.map((tag) => (
                     <Button
                       variant="outline"
                       size="sm"
-                      className="h-7 flex-shrink-0 bg-transparent text-xs"
+                      className="h-7 flex-shrink-0 bg-white/5 border-white/10 text-gray-300 hover:bg-blue-600 hover:text-white text-xs"
                       key={tag}
                       onClick={() => handleInspirationTagClick(tag)}
                     >
@@ -182,7 +184,7 @@ export function SongPanel() {
           <TabsContent value="custom" className="mt-6 space-y-6">
             <div className="flex flex-col gap-3">
               <div className="flex items-center justify-between">
-                <label className="text-sm font-medium">Lyrics</label>
+                <label className="text-sm font-medium text-white">Lyrics</label>
                 <div className="flex items-center gap-1">
                   <Button
                     variant={lyricsMode === "auto" ? "secondary" : "ghost"}
@@ -191,7 +193,7 @@ export function SongPanel() {
                       setLyrics("");
                     }}
                     size="sm"
-                    className="h-7 text-xs"
+                    className="h-7 text-xs text-gray-300 hover:bg-white/10"
                   >
                     Auto
                   </Button>
@@ -202,7 +204,7 @@ export function SongPanel() {
                       setLyrics("");
                     }}
                     size="sm"
-                    className="h-7 text-xs"
+                    className="h-7 text-xs text-gray-300 hover:bg-white/10"
                   >
                     Write
                   </Button>
@@ -212,16 +214,16 @@ export function SongPanel() {
                 placeholder={
                   lyricsMode === "write"
                     ? "Add your own lyrics here"
-                    : "Describe you lyrics, e.g., a sad song about lost love"
+                    : "Describe your lyrics, e.g., a sad song about lost love"
                 }
                 value={lyrics}
                 onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setLyrics(e.target.value)}
-                className="min-h-[100px] resize-none"
+                className="min-h-[100px] resize-none bg-white/5 border-white/10 text-white placeholder:text-gray-500"
               />
             </div>
 
             <div className="flex items-center justify-between">
-              <label className="text-sm font-medium">Instrumental</label>
+              <label className="text-sm font-medium text-white">Instrumental</label>
               <Switch
                 checked={instrumental}
                 onCheckedChange={setInstrumental}
@@ -230,12 +232,12 @@ export function SongPanel() {
 
             {/* Styles */}
             <div className="flex flex-col gap-3">
-              <label className="text-sm font-medium">Styles</label>
+              <label className="text-sm font-medium text-white">Styles</label>
               <Textarea
                 placeholder="Enter style tags"
                 value={styleInput}
                 onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setStyleInput(e.target.value)}
-                className="min-h-[60px] resize-none"
+                className="min-h-[60px] resize-none bg-white/5 border-white/10 text-white placeholder:text-gray-500"
               />
               <div className="w-full overflow-x-auto whitespace-nowrap">
                 <div className="flex gap-2 pb-2">
@@ -243,7 +245,7 @@ export function SongPanel() {
                     <Badge
                       variant="secondary"
                       key={tag}
-                      className="hover:bg-secondary/50 flex-shrink-0 cursor-pointer text-xs"
+                      className="hover:bg-blue-600 hover:text-white flex-shrink-0 cursor-pointer text-xs bg-white/5 border-white/10 text-gray-300"
                       onClick={() => handleStyleInputTagClick(tag)}
                     >
                       {tag}
@@ -256,13 +258,13 @@ export function SongPanel() {
         </Tabs>
       </div>
 
-      <div className="border-t p-4">
+      <div className="border-t border-white/10 p-4">
         <Button
           onClick={handleCreate}
           disabled={loading}
-          className="w-full cursor-pointer bg-gradient-to-r from-orange-500 to-pink-500 font-medium text-white hover:from-orange-600 hover:to-pink-600"
+          className="w-full cursor-pointer bg-blue-600 font-medium text-white hover:bg-blue-700"
         >
-          {loading ? <Loader2 className="animate-spin" /> : <Music />}
+          {loading ? <Loader2 className="animate-spin mr-2" /> : <Music className="mr-2" />}
           {loading ? "Creating..." : "Create"}
         </Button>
       </div>

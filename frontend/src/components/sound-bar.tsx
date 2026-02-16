@@ -114,11 +114,11 @@ export default function SoundBar() {
 
   return (
     <div className="px-4 pb-2">
-      <Card className="bg-background/60 relative w-full shrink-0 border-t py-0 backdrop-blur">
+      <Card className="bg-white/5 backdrop-blur border-white/10 relative w-full shrink-0 border-t py-0">
         <div className="space-y-2 p-3">
           <div className="flex items-center justify-between">
             <div className="flex min-w-0 flex-1 items-center gap-2">
-              <div className="relative flex h-10 w-10 flex-shrink-0 items-center justify-center overflow-hidden rounded-md bg-gradient-to-br from-purple-500 to-pink-500">
+              <div className="relative flex h-10 w-10 flex-shrink-0 items-center justify-center overflow-hidden rounded-md bg-gradient-to-br from-blue-500 to-blue-700">
                 {track?.artwork ? (
                   <Image
                     className="object-cover"
@@ -132,8 +132,8 @@ export default function SoundBar() {
                 )}
               </div>
               <div className="max-w-24 min-w-0 flex-1 md:max-w-full">
-                <p className="truncate text-sm font-medium">{track?.title}</p>
-                <p className="text-muted-foreground truncate text-xs">
+                <p className="truncate text-sm font-medium text-white">{track?.title}</p>
+                <p className="text-gray-400 truncate text-xs">
                   {track?.createdByUserName}
                 </p>
               </div>
@@ -141,7 +141,7 @@ export default function SoundBar() {
 
             {/* Centered controls */}
             <div className="absolute left-1/2 -translate-x-1/2">
-              <Button variant="ghost" size="icon" onClick={togglePlay}>
+              <Button variant="ghost" size="icon" onClick={togglePlay} className="hover:bg-white/10 text-white">
                 {isPlaying ? (
                   <Pause className="h-4 w-4" />
                 ) : (
@@ -153,7 +153,7 @@ export default function SoundBar() {
             {/* Additional controls */}
             <div className="flex items-center gap-1">
               <div className="flex items-center gap-2">
-                <Volume2 className="h-4 w-4" />
+                <Volume2 className="h-4 w-4 text-white" />
                 <Slider
                   value={volume}
                   onValueChange={setVolume}
@@ -165,17 +165,17 @@ export default function SoundBar() {
               </div>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon">
+                  <Button variant="ghost" size="icon" className="hover:bg-white/10 text-white">
                     <MoreHorizontal className="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-40">
+                <DropdownMenuContent align="end" className="w-40 bg-black border-white/10">
                   <DropdownMenuItem
                     onClick={() => {
                       if (!track?.url) return;
-
                       window.open(track?.url, "_blank");
                     }}
+                    className="text-white hover:bg-white/10 cursor-pointer"
                   >
                     <Download className="mr-2 h-4 w-4" />
                     Download
@@ -187,7 +187,7 @@ export default function SoundBar() {
 
           {/* Full width progress bar for song */}
           <div className="flex items-center gap-1">
-            <span className="text-muted-foreground w-8 text-right text-[10px]">
+            <span className="text-gray-400 w-8 text-right text-[10px]">
               {formatTime(currentTime)}
             </span>
             <Slider
@@ -197,7 +197,7 @@ export default function SoundBar() {
               step={1}
               onValueChange={handleSeek}
             />
-            <span className="text-muted-foreground w-8 text-right text-[10px]">
+            <span className="text-gray-400 w-8 text-right text-[10px]">
               {formatTime(duration)}
             </span>
           </div>

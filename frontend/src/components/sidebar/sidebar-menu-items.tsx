@@ -11,8 +11,8 @@ import {
 
 const menuItems = [
   {
-    title: "Home",
-    url: "/",
+    title: "Dashboard",
+    url: "/dashboard",
     icon: Home,
   },
   {
@@ -29,7 +29,11 @@ export function SidebarMenuItems() {
     <SidebarMenu>
       {menuItems.map((item) => (
         <SidebarMenuItem key={item.title}>
-          <SidebarMenuButton asChild isActive={pathname === item.url}>
+          <SidebarMenuButton 
+            asChild 
+            isActive={pathname === item.url}
+            className="text-gray-300 hover:bg-white/10 hover:text-white data-[active=true]:bg-blue-600 data-[active=true]:text-white"
+          >
             <Link href={item.url}>
               <item.icon className="size-4" />
               <span>{item.title}</span>

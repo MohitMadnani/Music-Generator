@@ -80,16 +80,16 @@ export function TrackList({ tracks }: { tracks: Track[] }) {
   );
 
   return (
-    <div className="flex flex-1 flex-col overflow-y-scroll">
+    <div className="flex flex-1 flex-col overflow-y-scroll bg-black text-white">
       <div className="flex-1 p-6">
         <div className="mb-4 flex items-center justify-between gap-4">
           <div className="relative max-w-md flex-1">
-            <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
+            <Search className="text-gray-500 absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
             <Input
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search..."
-              className="pl-10"
+              className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-gray-500"
             />
           </div>
           <Button
@@ -97,6 +97,7 @@ export function TrackList({ tracks }: { tracks: Track[] }) {
             variant="outline"
             size="sm"
             onClick={handleRefresh}
+            className="bg-white/5 border-white/10 text-white hover:bg-white/10"
           >
             {isRefreshing ? (
               <Loader2 className="mr-2 animate-spin" />
@@ -116,16 +117,16 @@ export function TrackList({ tracks }: { tracks: Track[] }) {
                   return (
                     <div
                       key={track.id}
-                      className="flex cursor-not-allowed items-center gap-4 rounded-lg p-3"
+                      className="flex cursor-not-allowed items-center gap-4 rounded-lg p-3 bg-red-500/10 border border-red-500/30"
                     >
-                      <div className="bg-destructive/10 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-md">
-                        <XCircle className="text-destructive h-6 w-6" />
+                      <div className="bg-red-500/20 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-md">
+                        <XCircle className="text-red-400 h-6 w-6" />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <h3 className="text-destructive truncate text-sm font-medium">
+                        <h3 className="text-red-400 truncate text-sm font-medium">
                           Generation failed
                         </h3>
-                        <p className="text-muted-foreground truncate text-xs">
+                        <p className="text-gray-400 truncate text-xs">
                           Please try creating the song again.
                         </p>
                       </div>
@@ -136,16 +137,16 @@ export function TrackList({ tracks }: { tracks: Track[] }) {
                   return (
                     <div
                       key={track.id}
-                      className="flex cursor-not-allowed items-center gap-4 rounded-lg p-3"
+                      className="flex cursor-not-allowed items-center gap-4 rounded-lg p-3 bg-red-500/10 border border-red-500/30"
                     >
-                      <div className="bg-destructive/10 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-md">
-                        <XCircle className="text-destructive h-6 w-6" />
+                      <div className="bg-red-500/20 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-md">
+                        <XCircle className="text-red-400 h-6 w-6" />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <h3 className="text-destructive truncate text-sm font-medium">
+                        <h3 className="text-red-400 truncate text-sm font-medium">
                           Not enough credits
                         </h3>
-                        <p className="text-muted-foreground truncate text-xs">
+                        <p className="text-gray-400 truncate text-xs">
                           Please purchase more credits to generate this song.
                         </p>
                       </div>
@@ -157,16 +158,16 @@ export function TrackList({ tracks }: { tracks: Track[] }) {
                   return (
                     <div
                       key={track.id}
-                      className="flex cursor-not-allowed items-center gap-4 rounded-lg p-3"
+                      className="flex cursor-not-allowed items-center gap-4 rounded-lg p-3 bg-blue-500/10 border border-blue-500/30"
                     >
-                      <div className="bg-muted flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-md">
-                        <Loader2 className="text-muted-foreground h-6 w-6 animate-spin" />
+                      <div className="bg-blue-500/20 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-md">
+                        <Loader2 className="text-blue-400 h-6 w-6 animate-spin" />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <h3 className="text-muted-foreground truncate text-sm font-medium">
+                        <h3 className="text-blue-400 truncate text-sm font-medium">
                           Processing song...
                         </h3>
-                        <p className="text-muted-foreground truncate text-xs">
+                        <p className="text-gray-400 truncate text-xs">
                           Refresh to check the status.
                         </p>
                       </div>
@@ -177,7 +178,7 @@ export function TrackList({ tracks }: { tracks: Track[] }) {
                   return (
                     <div
                       key={track.id}
-                      className="hover:bg-muted/50 flex cursor-pointer items-center gap-4 rounded-lg p-3 transition-colors"
+                      className="hover:bg-white/5 flex cursor-pointer items-center gap-4 rounded-lg p-3 transition-colors border border-white/10"
                       onClick={() => handleTrackSelect(track)}
                     >
                       {/* Thumbnail */}
@@ -186,17 +187,18 @@ export function TrackList({ tracks }: { tracks: Track[] }) {
                           <img
                             className="h-full w-full object-cover"
                             src={track.thumbnailUrl}
+                            alt={track.title}
                           />
                         ) : (
-                          <div className="bg-muted flex h-full w-full items-center justify-center">
-                            <Music className="text-muted-foreground h-6 w-6" />
+                          <div className="bg-white/5 flex h-full w-full items-center justify-center">
+                            <Music className="text-gray-500 h-6 w-6" />
                           </div>
                         )}
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 transition-opacity group-hover:opacity-100">
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 transition-opacity group-hover:opacity-100">
                           {loadingTrackId === track.id ? (
-                            <Loader2 className="animate-spin text-white" />
+                            <Loader2 className="animate-spin text-blue-500" />
                           ) : (
-                            <Play className="fill-white text-white" />
+                            <Play className="fill-blue-500 text-blue-500" />
                           )}
                         </div>
                       </div>
@@ -204,14 +206,14 @@ export function TrackList({ tracks }: { tracks: Track[] }) {
                       {/* Track info */}
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-2">
-                          <h3 className="trucate text-sm font-medium">
+                          <h3 className="truncate text-sm font-medium text-white">
                             {track.title}
                           </h3>
                           {track.instrumental && (
-                            <Badge variant="outline">Instrumental</Badge>
+                            <Badge variant="outline" className="border-blue-500/50 text-blue-400">Instrumental</Badge>
                           )}
                         </div>
-                        <p className="text-muted-foreground truncate text-xs">
+                        <p className="text-gray-400 truncate text-xs">
                           {track.prompt}
                         </p>
                       </div>
@@ -228,23 +230,24 @@ export function TrackList({ tracks }: { tracks: Track[] }) {
                           }}
                           variant="outline"
                           size="sm"
-                          className={`cursor-pointer ${track.published ? "border-red-200" : ""}`}
+                          className={`cursor-pointer bg-white/5 border-white/10 text-white hover:bg-white/10 ${track.published ? "border-red-500/50 text-red-400" : ""}`}
                         >
                           {track.published ? "Unpublish" : "Publish"}
                         </Button>
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon">
+                            <Button variant="ghost" size="icon" className="hover:bg-white/10 text-white">
                               <MoreHorizontal />
                             </Button>
                           </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end" className="w-40">
+                          <DropdownMenuContent align="end" className="w-40 bg-black border-white/10">
                             <DropdownMenuItem
                               onClick={async (e) => {
                                 e.stopPropagation();
                                 const playUrl = await getPlayUrl(track.id);
                                 window.open(playUrl, "_blank");
                               }}
+                              className="text-white hover:bg-white/10 cursor-pointer"
                             >
                               <Download className="mr-2" /> Download
                             </DropdownMenuItem>
@@ -253,6 +256,7 @@ export function TrackList({ tracks }: { tracks: Track[] }) {
                                 e.stopPropagation();
                                 setTrackToRename(track);
                               }}
+                              className="text-white hover:bg-white/10 cursor-pointer"
                             >
                               <Pencil className="mr-2" /> Rename
                             </DropdownMenuItem>
@@ -265,9 +269,9 @@ export function TrackList({ tracks }: { tracks: Track[] }) {
             })
           ) : (
             <div className="flex flex-col items-center justify-center pt-20 text-center">
-              <Music className="text-muted-foreground h-10 w-10" />
-              <h2 className="mt-4 text-lg font-semibold">No Music Yet</h2>
-              <p className="text-muted-foreground mt-1 text-sm">
+              <Music className="text-gray-500 h-10 w-10" />
+              <h2 className="mt-4 text-lg font-semibold text-white">No Music Yet</h2>
+              <p className="text-gray-400 mt-1 text-sm">
                 {searchQuery
                   ? "No tracks match your search."
                   : "Create your first song to get started."}

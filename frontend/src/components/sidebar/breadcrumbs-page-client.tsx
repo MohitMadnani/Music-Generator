@@ -9,22 +9,20 @@ import {
 } from "@/components/ui/breadcrumb";
 
 const routeNames: Record<string, string> = {
-  "/": "Home",
+  "/dashboard": "Dashboard",
   "/create": "Create",
   "/songs": "My Songs",
   "/favorites": "Favorites",
-  "/settings": "Settings",
-  "/upgrade": "Upgrade",
 };
 
 export function BreadcrumbPageClient() {
   const pathname = usePathname();
   const pageName = routeNames[pathname] ?? "Page";
 
-  if (pathname === "/") {
+  if (pathname === "/dashboard") {
     return (
       <BreadcrumbItem>
-        <BreadcrumbPage>{pageName}</BreadcrumbPage>
+        <BreadcrumbPage className="text-white">{pageName}</BreadcrumbPage>
       </BreadcrumbItem>
     );
   }
@@ -32,11 +30,13 @@ export function BreadcrumbPageClient() {
   return (
     <>
       <BreadcrumbItem>
-        <BreadcrumbLink href="/">Home</BreadcrumbLink>
+        <BreadcrumbLink href="/dashboard" className="text-gray-400 hover:text-white">
+          Dashboard
+        </BreadcrumbLink>
       </BreadcrumbItem>
-      <BreadcrumbSeparator />
+      <BreadcrumbSeparator className="text-gray-600" />
       <BreadcrumbItem>
-        <BreadcrumbPage>{pageName}</BreadcrumbPage>
+        <BreadcrumbPage className="text-white">{pageName}</BreadcrumbPage>
       </BreadcrumbItem>
     </>
   );

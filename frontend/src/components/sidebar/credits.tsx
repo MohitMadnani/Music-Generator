@@ -9,7 +9,7 @@ export async function Credits() {
   });
 
   if (!session) {
-    redirect("/auth/sign-in");
+    redirect("/"); // Redirect to landing page
   }
 
   const user = await db.user.findUnique({
@@ -21,8 +21,8 @@ export async function Credits() {
 
   return (
     <div className="flex flex-col">
-      <p className="font-semibold">{user?.credits ?? 0}</p>
-      <p className="text-muted-foreground text-sm">Credits</p>
+      <p className="font-semibold text-blue-500">{user?.credits ?? 0}</p>
+      <p className="text-gray-400 text-sm">Credits</p>
     </div>
   );
 }

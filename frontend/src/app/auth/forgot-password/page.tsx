@@ -38,10 +38,11 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="bg-card border-border rounded-xl border p-8 shadow-lg">
+    <div className="min-h-screen w-full bg-black text-white flex items-center justify-center p-4">
+      <div className="w-full max-w-md bg-white/5 backdrop-blur-xl border-white/10 rounded-lg border p-8 shadow-2xl">
       <div className="mb-8 text-center">
-        <h1 className="text-foreground text-3xl font-bold">Forgot Password</h1>
-        <p className="text-muted-foreground mt-2">We&apos;ll send you a reset link</p>
+        <h1 className="text-white text-3xl font-bold">Forgot Password</h1>
+        <p className="text-gray-400 mt-2">We&apos;ll send you a reset link</p>
       </div>
 
       {success ? (
@@ -50,20 +51,20 @@ export default function ForgotPasswordPage() {
             <p className="font-medium">Check your email!</p>
             <p className="mt-1 text-sm">We&apos;ve sent a password reset link to {email}</p>
           </div>
-          <p className="text-muted-foreground text-sm">
+          <p className="text-gray-400 text-sm">
             Click the link in the email to reset your password. The link will expire in 1 hour.
           </p>
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-6">
           {error && (
-            <div className="rounded-lg border border-destructive/50 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+            <div className="rounded-lg border border-red-500 bg-red-500/10 px-4 py-3 text-sm text-red-500">
               {error}
             </div>
           )}
 
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email" className="text-white">Email</Label>
             <Input
               id="email"
               type="email"
@@ -71,20 +72,26 @@ export default function ForgotPasswordPage() {
               onChange={(e) => setEmail(e.target.value)}
               required
               placeholder="you@example.com"
+              className="bg-white/5 border-white/10 text-white placeholder:text-gray-500"
             />
           </div>
 
-          <Button type="submit" disabled={loading} className="w-full">
+          <Button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+          >
             {loading ? "Sending..." : "Send Reset Link"}
           </Button>
         </form>
       )}
 
-      <p className="text-muted-foreground mt-8 text-center text-sm">
-        <Link href="/auth/sign-in" className="text-foreground hover:text-foreground/80 font-medium transition">
-          ← Back to sign in
-        </Link>
-      </p>
+        <p className="text-gray-400 mt-8 text-center text-sm">
+          <Link href="/auth/sign-in" className="text-blue-500 hover:text-blue-400 font-medium transition">
+            ← Back to sign in
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }

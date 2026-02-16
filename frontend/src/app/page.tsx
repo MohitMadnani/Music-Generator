@@ -1,7 +1,5 @@
 import Link from "next/link";
-import React from "react";
 import { Music, Sparkles, Zap, Users } from "lucide-react";
-
 import { AuthButtons, HeroButton, CTAButton } from "@/components/landing/auth-buttons";
 
 export default function LandingPage() {

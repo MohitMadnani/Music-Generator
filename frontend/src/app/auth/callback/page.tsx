@@ -19,10 +19,9 @@ function CallbackContent() {
       return;
     }
 
-    // If no error, the callback was successful - redirect to home
+    // If no error, the callback was successful - redirect to dashboard
     const timer = setTimeout(() => {
-      router.push("/");
-      router.refresh();
+      window.location.href = "/dashboard";
     }, 1000);
 
     return () => clearTimeout(timer);
@@ -30,7 +29,7 @@ function CallbackContent() {
 
   if (error) {
     return (
-      <div className="bg-slate-800 rounded-xl shadow-2xl p-8 border border-slate-700">
+      <div className="w-full max-w-md bg-white/5 backdrop-blur-xl rounded-lg shadow-2xl p-8 border border-white/10">
         <div className="text-center">
           <div className="bg-red-500/10 border border-red-500 text-red-500 px-4 py-4 rounded-lg mb-6">
             <p className="font-medium">Authentication Failed</p>
@@ -38,9 +37,9 @@ function CallbackContent() {
           </div>
           <Link
             href="/auth/sign-in"
-            className="inline-block py-3 px-6 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg transition"
+            className="inline-block py-3 px-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition"
           >
-            Try Again
+            Back to Sign In
           </Link>
         </div>
       </div>
@@ -48,11 +47,11 @@ function CallbackContent() {
   }
 
   return (
-    <div className="bg-slate-800 rounded-xl shadow-2xl p-8 border border-slate-700">
+    <div className="w-full max-w-md bg-white/5 backdrop-blur-xl rounded-lg shadow-2xl p-8 border border-white/10">
       <div className="text-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500 mx-auto mb-4"></div>
-        <h1 className="text-2xl font-bold text-white">Processing...</h1>
-        <p className="text-slate-400 mt-2">Completing authentication</p>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+        <h1 className="text-white text-2xl font-bold">Authentication Successful!</h1>
+        <p className="text-gray-400 mt-2">Redirecting to your dashboard...</p>
       </div>
     </div>
   );
@@ -60,17 +59,17 @@ function CallbackContent() {
 
 export default function CallbackPage() {
   return (
-    <Suspense
-      fallback={
-        <div className="bg-slate-800 rounded-xl shadow-2xl p-8 border border-slate-700">
+    <div className="min-h-screen w-full bg-black text-white flex items-center justify-center p-4">
+      <Suspense fallback={
+        <div className="w-full max-w-md bg-white/5 backdrop-blur-xl rounded-lg shadow-2xl p-8 border border-white/10">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500 mx-auto mb-4"></div>
-            <p className="text-slate-400">Loading...</p>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+            <h1 className="text-white text-2xl font-bold">Processing...</h1>
           </div>
         </div>
-      }
-    >
-      <CallbackContent />
-    </Suspense>
+      }>
+        <CallbackContent />
+      </Suspense>
+    </div>
   );
 }
