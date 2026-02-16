@@ -8,14 +8,12 @@ function CallbackContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [error, setError] = useState("");
-  const [processing, setProcessing] = useState(true);
 
   useEffect(() => {
     const errorParam = searchParams.get("error");
     
     if (errorParam) {
       setError(decodeURIComponent(errorParam));
-      setProcessing(false);
       return;
     }
 

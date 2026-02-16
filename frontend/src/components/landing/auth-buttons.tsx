@@ -57,7 +57,7 @@ export function AuthButtons() {
       ?.split(" ")
       .map((n) => n[0])
       .join("")
-      .toUpperCase() || user.email?.[0]?.toUpperCase() || "U";
+      .toUpperCase() ?? user.email?.[0]?.toUpperCase() ?? "U";
 
     return (
       <DropdownMenu>

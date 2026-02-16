@@ -26,6 +26,7 @@ import {
 import { RenameDialog } from "./rename-dialog";
 import { useRouter } from "next/navigation";
 import { usePlayerStore } from "@/stores/use-player-store";
+import Image from "next/image";
 
 export interface Track {
   id: string;
@@ -184,10 +185,12 @@ export function TrackList({ tracks }: { tracks: Track[] }) {
                       {/* Thumbnail */}
                       <div className="group relative h-12 w-12 flex-shrink-0 overflow-hidden rounded-md">
                         {track.thumbnailUrl ? (
-                          <img
+                          <Image
                             className="h-full w-full object-cover"
                             src={track.thumbnailUrl}
                             alt={track.title}
+                            width={48}
+                            height={48}
                           />
                         ) : (
                           <div className="bg-white/5 flex h-full w-full items-center justify-center">
